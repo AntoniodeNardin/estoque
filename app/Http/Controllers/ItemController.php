@@ -25,14 +25,7 @@ class ItemController extends Controller
             'ativo' => 'required|boolean',
         ]);
 
-        $item = Item::create([
-            'nome' => $request->nome,
-            'categoria_id' => $request->categoria_id,
-            'unidade_id' => $request->unidade_id,
-            'preco_custo' => $request->preco_custo,
-            'estoque_atual' => $request->estoque_atual,
-            'ativo' => $request->ativo,
-        ]);
+        $item = Item::create($request->all());
 
         return response()->json($item, 201);
     }

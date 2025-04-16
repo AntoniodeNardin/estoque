@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
-use Illuminate\Http\Request;
+use App\Http\Requests\CategoriaRequest;
 
 class CategoriaController extends Controller
 {
@@ -12,12 +12,8 @@ class CategoriaController extends Controller
         return Categoria::all();
     }
 
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-        ]);
-
         $categoria = Categoria::create([
             'nome' => $request->nome,
         ]);
@@ -32,13 +28,9 @@ class CategoriaController extends Controller
         return response()->json($categoria);
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoriaRequest $request, $id)
     {
         $categoria = Categoria::findOrFail($id);
-
-        $request->validate([
-            'nome' => 'required|string|max:255',
-        ]);
 
         $categoria->update([
             'nome' => $request->nome,

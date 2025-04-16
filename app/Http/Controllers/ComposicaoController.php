@@ -21,13 +21,7 @@ class ComposicaoController extends Controller
             'percentual_perda' => 'required|numeric',
         ]);
 
-        $composicao = Composicao::create([
-            'item_pai_id' => $request->item_pai_id,
-            'item_componente_id' => $request->item_componente_id,
-            'quantidade' => $request->quantidade,
-            'percentual_perda' => $request->percentual_perda,
-        ]);
-
+        $composicao = Composicao::create($request->all());
 
         return response()->json($composicao, 201);
     }
@@ -44,14 +38,11 @@ class ComposicaoController extends Controller
         $composicao = Composicao::findOrFail($id);
 
         $request->validate([
-            'quantidade' => 'required|numeric',
-            'percentual_perda' => 'required|numeric',
+            'quantidade' => 'nullable|numeric',
+            'percentual_perda' => 'nullable|numeric',
         ]);
 
-        $composicao->update([
-            'quantidade' => $request->quantidade,
-            'percentual_perda' => $request->percentual_perda,
-        ]);
+        $composicao->update($request->all());
 
         return response()->json($composicao);
     }

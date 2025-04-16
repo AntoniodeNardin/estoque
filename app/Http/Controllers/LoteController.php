@@ -9,7 +9,7 @@ class LoteController extends Controller
 {
     public function index()
     {
-        return Lote::all();
+        return Lote::with('item')->get();
     }
 
     public function store(Request $request)
@@ -21,12 +21,7 @@ class LoteController extends Controller
             'quantidade_disponivel' => 'required|numeric',
         ]);
 
-        $lote = Lote::create([
-            'item_id' => $request->item_id,
-            'codigo_lote' => $request->codigo_lote,
-            'data_validade' => $request->data_validade,
-            'quantidade_disponivel' => $request->quantidade_disponivel,
-        ]);
+        $lote = Lote::create($request->all());
 
         return response()->json($lote, 201);
     }

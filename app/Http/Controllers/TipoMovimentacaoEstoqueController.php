@@ -19,10 +19,7 @@ class TipoMovimentacaoEstoqueController extends Controller
             'tipo' => 'required|string|max:255',
         ]);
 
-        $tipoMovimentacao = TipoMovimentacaoEstoque::create([
-            'descricao' => $request->descricao,
-            'tipo' => $request->tipo,
-        ]);
+        $tipoMovimentacao = TipoMovimentacaoEstoque::create($request->all());
 
         return response()->json($tipoMovimentacao, 201);
     }
