@@ -15,13 +15,10 @@ class Composicao extends Model
         'item_pai_id', 'item_componente_id', 'quantidade', 'percentual_perda'
     ];
 
-    public function itemPai()
+    public function itens()
     {
-        return $this->belongsTo(Item::class, 'item_pai_id');
+        return $this->belongsToMany(Item::class, 'composicao_item');
+
     }
 
-    public function itemComponente()
-    {
-        return $this->belongsTo(Item::class, 'item_componente_id');
-    }
 }

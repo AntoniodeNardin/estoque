@@ -9,27 +9,33 @@ class ComposicaoController extends Controller
 {
     public function index()
     {
-        return Composicao::with(['itemPai', 'itemComponente'])->get();
+        return Composicao::with('itens')->get();
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'item_pai_id' => 'required|exists:itens,id',
-            'item_componente_id' => 'required|exists:itens,id',
+            'nome' => 'required|string',
             'quantidade' => 'required|numeric',
-            'percentual_perda' => 'required|numeric',
+            'percentual_perda' => 'nullable|numeric',
+            'itens' => 'required|array',
+            'itens.*' => 'exists:itens,id',
         ]);
 
-        $composicao = Composicao::create($request->all());
+        $composicao = Composicao::create([
+            'nome' => $request->nome,
+            'quantidade' => $request->quantidade,
+            'percentual_perda' => $request->percentual_perda ?? 0,
+        ]);
 
-        return response()->json($composicao, 201);
+        $composicao->itens()->attach($request->itens);
+
+        return response()->json($composicao->load('itens'), 201);
     }
 
     public function show($id)
     {
-        $composicao = Composicao::with(['itemPai', 'itemComponente'])->findOrFail($id);
-
+        $composicao = Composicao::with('itens')->findOrFail($id);
         return response()->json($composicao);
     }
 
@@ -38,13 +44,20 @@ class ComposicaoController extends Controller
         $composicao = Composicao::findOrFail($id);
 
         $request->validate([
-            'quantidade' => 'nullable|numeric',
+            'nome' => 'sometimes|string',
+            'quantidade' => 'sometimes|numeric',
             'percentual_perda' => 'nullable|numeric',
+            'itens' => 'sometimes|array',
+            'itens.*' => 'exists:itens,id',
         ]);
 
-        $composicao->update($request->all());
+        $composicao->update($request->only(['nome', 'quantidade', 'percentual_perda']));
 
-        return response()->json($composicao);
+        if ($request->has('itens')) {
+            $composicao->itens()->sync($request->itens);
+        }
+
+        return response()->json($composicao->load('itens'));
     }
 
     public function destroy($id)

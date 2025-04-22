@@ -12,8 +12,12 @@ class Item extends Model
     protected $table = 'itens';
 
     protected $fillable = [
-        'nome', 'categoria_id', 'unidade_id', 'preco_custo',
-        'estoque_atual', 'ativo'
+        'nome',
+        'categoria_id',
+        'unidade_id',
+        'preco_custo',
+        'estoque_atual',
+        'ativo'
     ];
 
     public function categoria()
@@ -24,5 +28,10 @@ class Item extends Model
     public function unidade()
     {
         return $this->belongsTo(Unidade::class);
+    }
+
+    public function composicoes()
+    {
+        return $this->belongsToMany(Composicao::class, 'composicao_item');
     }
 }
