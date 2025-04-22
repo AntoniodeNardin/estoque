@@ -12,7 +12,7 @@ class Composicao extends Model
     protected $table = 'composicoes';
 
     protected $fillable = [
-        'item_pai_id', 'item_componente_id', 'quantidade', 'percentual_perda'
+        'nome', 'quantidade', 'percentual_perda'
     ];
 
     public function itens()

@@ -13,14 +13,15 @@ class ComposicaoControllerTest extends TestCase
 
     public function test_it_can_create_a_composicao()
     {
-        $itemPai = Item::factory()->create();
-        $itemComponente = Item::factory()->create();
+
+        $itens = Item::factory()->count(2)->create();
+        $itensIds = $itens->pluck('id')->toArray();
 
         $response = $this->postJson('/api/composicoes', [
-            'item_pai_id' => $itemPai->id,
-            'item_componente_id' => $itemComponente->id,
+            'nome'  => 'Composição de Teste',
             'quantidade' => 2,
             'percentual_perda' => 0.05,
+            'itens' => $itensIds,
         ]);
 
         $response->assertStatus(201);
@@ -28,11 +29,26 @@ class ComposicaoControllerTest extends TestCase
             'quantidade' => 2,
             'percentual_perda' => 0.05,
         ]);
+
+        $this->assertDatabaseHas('composicoes', [
+            'quantidade' => 2,
+            'percentual_perda' => 0.05,
+        ]);
+
+        $this->assertDatabaseHas('composicao_item', [
+            'composicao_id' => $response->json('id'),
+            'item_id' => $itensIds[0],
+        ]);
     }
 
     public function test_it_can_get_a_list_of_composicoes()
     {
-        Composicao::factory()->count(3)->create();
+        $composicoes = Composicao::factory()->count(3)->create();
+        $itens = Item::factory()->count(2)->create();
+
+        foreach ($composicoes as $composicao) {
+            $composicao->itens()->attach($itens->pluck('id')->toArray());
+        }
 
         $response = $this->getJson('/api/composicoes');
 
@@ -43,6 +59,9 @@ class ComposicaoControllerTest extends TestCase
     public function test_it_can_show_a_composicao()
     {
         $composicao = Composicao::factory()->create();
+        $itens = Item::factory()->count(2)->create();
+        $composicao->itens()->attach($itens->pluck('id')->toArray());
+
 
         $response = $this->getJson('/api/composicoes/' . $composicao->id);
 
@@ -55,6 +74,9 @@ class ComposicaoControllerTest extends TestCase
     public function test_it_can_update_a_composicao()
     {
         $composicao = Composicao::factory()->create();
+        $itens = Item::factory()->count(2)->create();
+        $composicao->itens()->attach($itens->pluck('id')->toArray());
+
 
         $response = $this->putJson('/api/composicoes/' . $composicao->id, [
             'quantidade' => 3,
@@ -71,9 +93,13 @@ class ComposicaoControllerTest extends TestCase
     public function test_it_can_delete_a_composicao()
     {
         $composicao = Composicao::factory()->create();
+        $itens = Item::factory()->count(2)->create();
+        $composicao->itens()->attach($itens->pluck('id')->toArray());
+
 
         $response = $this->deleteJson('/api/composicoes/' . $composicao->id);
 
         $response->assertStatus(204);
+        $this->assertDatabaseMissing('composicoes',$composicao->toArray());
     }
 }
