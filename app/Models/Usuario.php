@@ -13,15 +13,15 @@ class Usuario extends Authenticatable
     protected $table = 'usuarios';
 
     protected $fillable = [
-        'nome', 'email', 'senha_hash', 'tipo', 'ativo'
+        'nome', 'email', 'senha', 'tipo', 'ativo'
     ];
 
     protected $hidden = [
-        'senha_hash',
+        'senha',
     ];
 
     public function setSenhaHashAttribute($value)
     {
-        $this->attributes['senha_hash'] = bcrypt($value);
+        $this->attributes['senha'] = bcrypt($value);
     }
 }

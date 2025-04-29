@@ -17,7 +17,7 @@ class UsuarioController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
-            'senha_hash' => 'required|string',
+            'senha' => 'required|string',
             'tipo' => 'required|string|max:255',
             'ativo' => 'required|boolean',
         ]);
@@ -25,7 +25,7 @@ class UsuarioController extends Controller
         $usuario = Usuario::create([
             'nome' => $request->nome,
             'email' => $request->email,
-            'senha_hash' => bcrypt($request->senha_hash),
+            'senha' => bcrypt($request->senha),
             'tipo' => $request->tipo,
             'ativo' => $request->ativo,
         ]);
@@ -47,14 +47,13 @@ class UsuarioController extends Controller
         $validatedData = $request->validate([
             'nome' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:usuarios,email,' . $id,
-            'senha_hash' => 'nullable|string',
+            'senha' => 'nullable|string',
             'tipo' => 'nullable|string|max:255',
             'ativo' => 'nullable|boolean',
         ]);
 
-        // Se a senha foi enviada, criptografa
-        if ($request->filled('senha_hash')) {
-            $validatedData['senha_hash'] = bcrypt($request->senha_hash);
+        if ($request->filled('senha')) {
+            $validatedData['senha'] = bcrypt($request->senha);
         }
 
         $usuario->update($validatedData);

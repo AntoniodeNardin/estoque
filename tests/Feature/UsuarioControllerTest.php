@@ -15,7 +15,7 @@ class UsuarioControllerTest extends TestCase
         $response = $this->postJson('/api/usuarios', [
             'nome' => 'João da Silva',
             'email' => 'joao@example.com',
-            'senha_hash' => bcrypt('senha123'),
+            'senha' => bcrypt('senha123'),
             'tipo' => 'administrador',
             'ativo' => true,
         ]);

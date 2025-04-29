@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nome');
             $table->string('email')->unique();
-            $table->string('senha_hash');
+            $table->string('senha');
             $table->enum('tipo', ['administrador', 'operador']);
             $table->boolean('ativo')->default(true);
             $table->timestamps();

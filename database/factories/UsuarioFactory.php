@@ -14,7 +14,7 @@ class UsuarioFactory extends Factory
         return [
             'nome' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'senha_hash' => bcrypt('password'),
+            'senha' => bcrypt('password'),
             'tipo' => $this->faker->randomElement(['administrador', 'operador']),
             'ativo' => $this->faker->boolean,
         ];
