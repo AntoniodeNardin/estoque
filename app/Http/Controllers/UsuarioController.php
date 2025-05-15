@@ -14,20 +14,20 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|string',
-            'tipo' => 'required|string|max:255',
-            'ativo' => 'required|boolean',
         ]);
+
 
         $usuario = Usuario::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => bcrypt($request->senha),
-            'tipo' => $request->tipo,
-            'ativo' => $request->ativo,
+            'tipo' => $request->tipo ?? 'operador',
+            'ativo' => true,
         ]);
 
         return response()->json($usuario, 201);
