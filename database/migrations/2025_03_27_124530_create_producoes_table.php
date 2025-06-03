@@ -9,8 +9,6 @@ return new class extends Migration {
     {
         Schema::create('producoes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('item_id')->constrained('itens')->onDelete('cascade'); // Item produzido (fórmula base ou pizza)
-            $table->float('quantidade_produzida');
             $table->dateTime('data_producao');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->text('observacao')->nullable();

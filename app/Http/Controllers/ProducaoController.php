@@ -23,7 +23,14 @@ class ProducaoController extends Controller
 
         $producao = Producao::create($request->all());
 
-        return response()->json($producao, 201);
+        foreach ($request->itens as $item) {
+            $producao->itens()->create([
+                'item_id' => $item['item_id'],
+                'quantidade' => $item['quantidade']
+            ]);
+        }
+
+        return response()->json($producao->load('itens'));
     }
 
     public function show($id)

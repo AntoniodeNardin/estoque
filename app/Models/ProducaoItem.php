@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lote extends Model
+class ProducaoItem extends Model
 {
     use HasFactory;
+    protected $fillable = ['producao_id', 'item_id', 'quantidade_produzida'];
 
-    protected $fillable = [
-        'item_id',
-        'codigo_lote',
-        'data_validade',
-        'quantidade_disponivel'
-    ];
+    public function producao()
+    {
+        return $this->belongsTo(Producao::class);
+    }
 
     public function item()
     {

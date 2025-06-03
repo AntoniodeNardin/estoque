@@ -12,13 +12,11 @@ class Producao extends Model
     protected $table = 'producoes';
 
     protected $fillable = [
-        'item_id', 'quantidade_produzida', 'data_producao', 'usuario_id', 'observacao'
+        'data_producao',
+        'usuario_id',
+        'observacao'
     ];
 
-    public function item()
-    {
-        return $this->belongsTo(Item::class);
-    }
 
     public function usuario()
     {
@@ -28,5 +26,10 @@ class Producao extends Model
     public function resultados()
     {
         return $this->hasMany(ProducaoResultado::class, 'producao_id');
+    }
+
+    public function itens()
+    {
+        return $this->hasMany(ProducaoItem::class);
     }
 }

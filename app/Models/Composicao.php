@@ -12,13 +12,13 @@ class Composicao extends Model
     protected $table = 'composicoes';
 
     protected $fillable = [
-        'nome', 'quantidade', 'percentual_perda'
+        'nome',
+        'quantidade',
+        'percentual_perda'
     ];
 
     public function itens()
     {
         return $this->belongsToMany(Item::class, 'composicao_item');
-
     }
-
 }

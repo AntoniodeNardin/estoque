@@ -12,8 +12,14 @@ class MovimentacaoEstoque extends Model
     protected $table = 'movimentacoes_estoque';
 
     protected $fillable = [
-        'item_id', 'tipo_movimentacao_id', 'lote_id', 'producao_id', 'usuario_id',
-        'quantidade', 'data_movimentacao', 'observacao'
+        'item_id',
+        'tipo_movimentacao_id',
+        'lote_id',
+        'producao_id',
+        'usuario_id',
+        'quantidade',
+        'data_movimentacao',
+        'observacao'
     ];
 
     public function item()
