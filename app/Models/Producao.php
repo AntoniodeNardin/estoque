@@ -11,6 +11,12 @@ class Producao extends Model
 
     protected $table = 'producoes';
 
+    protected $with = [
+        'usuario',
+        'resultados',
+        'itens'
+    ];
+
     protected $fillable = [
         'data_producao',
         'usuario_id',
