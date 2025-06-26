@@ -24,5 +24,11 @@ class DatabaseSeeder extends Seeder
         Lote::factory()->count(10)->create();
         Usuario::factory()->count(10)->create();
 
+        Usuario::create([
+            'nome' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'senha' => bcrypt('123456'),
+            'tipo' => 'administrador',
+        ]);
     }
 }
