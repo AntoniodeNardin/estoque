@@ -9,8 +9,10 @@ return new class extends Migration {
     {
         Schema::create('producoes', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
             $table->dateTime('data_producao');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
+            $table->float('quantidade_produzida')->default(1);
             $table->text('observacao')->nullable();
             $table->timestamps();
         });

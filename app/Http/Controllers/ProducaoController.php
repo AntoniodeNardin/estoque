@@ -15,10 +15,7 @@ class ProducaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'observacao' => 'required|string|max:255',
-            'quantidade_produzida' => 'required|numeric',
             'data_producao' => 'required|date',
-
         ]);
 
         $producao = Producao::create($request->all());

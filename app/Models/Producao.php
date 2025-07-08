@@ -20,7 +20,8 @@ class Producao extends Model
     protected $fillable = [
         'data_producao',
         'usuario_id',
-        'observacao'
+        'observacao',
+        'nome'
     ];
 
 
