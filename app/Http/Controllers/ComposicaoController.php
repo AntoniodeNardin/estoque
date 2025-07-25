@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Composicao;
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class ComposicaoController extends Controller
 {
@@ -26,6 +27,16 @@ class ComposicaoController extends Controller
             'nome' => $request->nome,
             'quantidade' => $request->quantidade,
             'percentual_perda' => $request->percentual_perda ?? 0,
+        ]);
+
+        Item::create([
+            'nome' => $request->nome,
+            'categoria_id' => null,
+            'unidade_id' => null,
+            'preco_custo' => 0,
+            'estoque_atual' => 0, 
+            'is_composicao' => true,
+            'ativo' => true,
         ]);
 
         $composicao->itens()->attach($request->itens);

@@ -23,6 +23,7 @@ class ItemController extends Controller
             'preco_custo' => 'required|numeric',
             'estoque_atual' => 'required|numeric',
             'ativo' => 'required|boolean',
+            'is_composicao' => 'nullable|boolean',
         ]);
 
         $item = Item::create($request->all());

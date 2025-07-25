@@ -17,6 +17,7 @@ class Item extends Model
         'unidade_id',
         'preco_custo',
         'estoque_atual',
+        'is_composicao',
         'ativo'
     ];
 

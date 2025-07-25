@@ -34,6 +34,8 @@ class ProducaoController extends Controller
     {
         $producao = Producao::findOrFail($id);
 
+        $producao->load('itens');
+
         return response()->json($producao);
     }
 
