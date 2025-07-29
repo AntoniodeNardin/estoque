@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->decimal('preco_custo', 10, 2);
             $table->float('estoque_atual')->default(0);
             $table->boolean('ativo')->default(true);
+            $table->boolean('is_composicao')->default(false);
             $table->timestamps();
         });
     }

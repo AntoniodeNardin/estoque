@@ -8,6 +8,9 @@ use App\Models\Item;
 
 class ComposicaoController extends Controller
 {
+    private const composicao_categoria_id = 2; // Assuming category ID for compositions is 2
+    private const composicao_unidade_id = 2; // Assuming unit ID for compositions is 2
+
     public function index()
     {
         return Composicao::with('itens')->get();
@@ -31,8 +34,8 @@ class ComposicaoController extends Controller
 
         Item::create([
             'nome' => $request->nome,
-            'categoria_id' => null,
-            'unidade_id' => null,
+            'categoria_id' => self::composicao_categoria_id,
+            'unidade_id' => self::composicao_unidade_id,
             'preco_custo' => 0,
             'estoque_atual' => 0, 
             'is_composicao' => true,
