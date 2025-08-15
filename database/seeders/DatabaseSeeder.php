@@ -17,12 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Categoria::factory()->count(2)->create();
-        Item::factory()->count(2)->create();
-        Unidade::factory()->count(2)->create();
-        Composicao::factory()->count(10)->create();
-        Lote::factory()->count(10)->create();
-        Usuario::factory()->count(10)->create();
 
         Usuario::create([
             'nome' => 'Admin',
@@ -30,5 +24,13 @@ class DatabaseSeeder extends Seeder
             'senha' => bcrypt('123456'),
             'tipo' => 'administrador',
         ]);
+
+        $unidades = ['ml', 'gramas', 'fatias'];
+
+        foreach ($unidades as $unidade) {
+            Unidade::create([
+                'nome' => $unidade,
+            ]);
+        }
     }
 }
